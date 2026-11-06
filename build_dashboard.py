@@ -60,13 +60,17 @@ def forecast_charts(fc):
     h["local"] = h["time"].dt.tz_convert("America/Los_Angeles")
     h = h[h["time"] < h["time"].min() + pd.Timedelta(hours=72)].reset_index(drop=True)
     start = h["local"].iloc[0]
-    six = h.set_index("local").resample("6h")["snowfallAmount"].sum().round(2)
+    is_rain = h["snowLevel"] > config.RAIN_SNOW_LEVEL_FT
+    h["rain"] = h["quantitativePrecipitation"].where(is_rain, 0.0)  # NWS gives no rain field: precip in rain hours
+    six = h.set_index("local").resample("6h")[["snowfallAmount", "rain"]].sum().round(2)
+    hours_in = [(t - start) / pd.Timedelta(hours=1) + 3 for t in six.index]
     return {
         "hour_labels": [t.strftime("%a %I %p").replace(" 0", " ") for t in h["local"]],
         "ticks": [i for i, t in enumerate(h["local"]) if t.hour in (0, 12)],
-        "level": [{"x": i, "y": None if pd.isna(v) else int(v), "wet": bool(q > 0)}
-                  for i, (v, q) in enumerate(zip(h["snowLevel"], h["quantitativePrecipitation"]))],
-        "snow": [{"x": (t - start) / pd.Timedelta(hours=1) + 3, "y": float(v)} for t, v in six.items()],
+        "level": [{"x": i, "y": None if pd.isna(v) else int(v), "kind": ("rain" if r else "snow") if q > 0 else None}
+                  for i, (v, q, r) in enumerate(zip(h["snowLevel"], h["quantitativePrecipitation"], is_rain))],
+        "snow": [{"x": x, "y": float(v)} for x, v in zip(hours_in, six["snowfallAmount"])],
+        "rain": [{"x": x, "y": float(v)} for x, v in zip(hours_in, six["rain"])],
     }
 
 
@@ -89,6 +93,7 @@ def forecast_table(fc):
         hrs = h[h["day"] == day]
         wet = hrs[hrs["quantitativePrecipitation"] > 0]
         snow = hrs["snowfallAmount"].sum()
+        rain = wet.loc[wet["snowLevel"] > config.RAIN_SNOW_LEVEL_FT, "quantitativePrecipitation"].sum()
         gust = hrs["windGust"].max()
         d, n = pair.get("day"), pair.get("night")
         name = "Today" if day == today else day.strftime("%a %b %d").replace(" 0", " ")
@@ -100,6 +105,7 @@ def forecast_table(fc):
         snow_cell = f'{snow:.1f}"' if snow >= 0.05 else "–"
         if snow >= 1:
             snow_cell = f"<strong>{snow_cell}</strong>"
+        rain_cell = f'{rain:.2f}"' if rain >= 0.005 else "–"
         if len(wet):
             lvl = int(wet["snowLevel"].max())
             level_cell = f"{lvl:,} ft"
@@ -114,13 +120,15 @@ def forecast_table(fc):
                          for p in (d, n) if p)
         rows += (f'<tr class="fc-row" data-i="{i}"><td class="fc-day"><span class="caret">▸</span>{name}</td>'
                  f'<td class="num">{temps}</td><td>{sky}</td><td class="num">{max(pops) if pops else 0}%</td>'
-                 f'<td class="num">{snow_cell}</td><td class="num">{level_cell}</td><td class="num">{gust_cell}</td></tr>'
-                 f'<tr class="fc-detail" id="fc-detail-{i}" hidden><td colspan="7">{detail}</td></tr>')
+                 f'<td class="num">{snow_cell}</td><td class="num">{rain_cell}</td><td class="num">{level_cell}</td>'
+                 f'<td class="num">{gust_cell}</td></tr>'
+                 f'<tr class="fc-detail" id="fc-detail-{i}" hidden><td colspan="8">{detail}</td></tr>')
     return f"""<div class="table-wrap"><table class="fc">
       <thead><tr><th>Day</th><th class="num">High / Low</th><th>Sky</th><th class="num">Precip chance</th>
-        <th class="num">Snow</th><th class="num">Snow level</th><th class="num">Max gust</th></tr></thead>
+        <th class="num">Snow</th><th class="num">Rain</th><th class="num">Snow level</th><th class="num">Max gust</th></tr></thead>
       <tbody>{rows}</tbody></table></div>
-      <div class="muted">Click a day for the NWS wording. Snow, snow level and gusts come from the NWS hourly grid;
+      <div class="muted">Click a day for the NWS wording. Snow, rain, snow level and gusts come from the NWS hourly grid;
+        rain is inches of water from hours when the snow level is above {config.RAIN_SNOW_LEVEL_FT:,} ft;
         snow level shows the highest it gets while precipitation is falling.</div>"""
 
 
@@ -328,15 +336,20 @@ table.fc {{ width: 100%; border-collapse: collapse; font-size: 14px; }}
     <div class="chart-box">
       <h3>Snow level (ft), next 72 hours</h3>
       <div class="key">
-        <span><i class="swatch" style="background:var(--series-1)"></i>Precipitation expected</span>
+        <span><i class="swatch" style="background:var(--series-2)"></i>Rain: snow level above {config.RAIN_SNOW_LEVEL_FT:,} ft</span>
+        <span><i class="swatch" style="background:var(--series-1)"></i>Snow: snow level at or below {config.RAIN_SNOW_LEVEL_FT:,} ft</span>
         <span><i class="swatch dashed"></i>Dry</span>
         <span><i class="swatch" style="background:var(--mountain)"></i>Crystal, base to summit</span>
       </div>
       <div class="chart"><canvas id="fcLevel"></canvas></div>
-      <div class="muted">When the line is inside the shaded band, rain falls below it and snow above.</div>
-      <h3 style="margin-top:16px">Forecast snowfall per 6 hours (in)</h3>
+      <div class="muted">Color uses one cutoff for the whole mountain. When the line is inside the shaded band, rain falls below it and snow above.</div>
+      <h3 style="margin-top:16px">Forecast snow and rain per 6 hours (in)</h3>
+      <div class="key">
+        <span><i class="swatch" style="background:var(--series-1);height:12px"></i>Snow, inches of snowfall</span>
+        <span><i class="swatch" style="background:var(--series-2)"></i>Rain, inches of water</span>
+      </div>
       <div class="chart short"><canvas id="fcSnow"></canvas></div>
-      <div class="muted">Scale starts at {config.FORECAST_SNOW_SCALE_IN:g} in, so small amounts look small. It grows if a bigger storm is forecast.</div>
+      <div class="muted">Rain is NWS precipitation in hours when the snow level is above {config.RAIN_SNOW_LEVEL_FT:,} ft. An inch of rain holds about as much water as 10 in of snow. Scale starts at {config.FORECAST_SNOW_SCALE_IN:g} in, so small amounts look small. It grows if a bigger storm is forecast.</div>
     </div>
     {fc_table}
   </section>
@@ -414,13 +427,14 @@ if (window.Chart) {{
       }}
     }};
     const ridge = v => [{{x: 0, y: v}}, {{x: 72, y: v}}];
-    const wet = c => f.level[c.p0DataIndex].wet || f.level[c.p1DataIndex].wet;
+    const kind = c => f.level[c.p0DataIndex].kind || f.level[c.p1DataIndex].kind;
+    const kindColor = {{rain: css('--series-2'), snow: css('--series-1')}};
     new Chart(document.getElementById('fcLevel'), {{
       type: 'line',
       plugins: [mountainLabels],
       data: {{datasets: [
         {{label: 'Snow level', data: f.level, borderWidth: 2.5, tension: 0.3, borderColor: css('--series-1'),
-          segment: {{borderColor: c => wet(c) ? css('--series-1') : css('--muted'), borderDash: c => wet(c) ? [] : [5, 4]}}}},
+          segment: {{borderColor: c => kindColor[kind(c)] || css('--muted'), borderDash: c => kind(c) ? [] : [5, 4]}}}},
         {{label: 'Summit', data: ridge({config.SUMMIT_FT}), borderColor: css('--ink-2'), borderWidth: 2,
           backgroundColor: css('--mountain'), fill: '+1'}},
         {{label: 'Base', data: ridge({config.BASE_FT}), borderColor: css('--ink-2'), borderWidth: 2}},
@@ -430,7 +444,7 @@ if (window.Chart) {{
         plugins: {{legend: {{display: false}}, tooltip: {{
           filter: i => i.datasetIndex === 0,
           callbacks: {{title: hoverTitle,
-            label: i => `Snow level ${{i.parsed.y.toLocaleString()}} ft · ${{f.level[i.dataIndex].wet ? 'precipitation' : 'dry'}}`}}
+            label: i => `Snow level ${{i.parsed.y.toLocaleString()}} ft · ${{f.level[i.dataIndex].kind || 'dry'}}`}}
         }}}},
         interaction: {{mode: 'nearest', axis: 'x', intersect: false}},
         scales: {{x: {{...xAxis}}, y: {{...yWidth, suggestedMin: 2000, suggestedMax: 8000, ticks: {{callback: v => v.toLocaleString()}}}}}}
@@ -438,14 +452,16 @@ if (window.Chart) {{
     }});
     new Chart(document.getElementById('fcSnow'), {{
       type: 'bar',
-      data: {{datasets: [{{label: 'Snowfall (in)', data: f.snow, backgroundColor: css('--series-1'),
-        barPercentage: 0.9, categoryPercentage: 1}}]}},
+      data: {{datasets: [
+        {{label: 'snow', data: f.snow, backgroundColor: css('--series-1'), barPercentage: 0.9, categoryPercentage: 1}},
+        {{label: 'rain', data: f.rain, backgroundColor: css('--series-2'), barPercentage: 0.9, categoryPercentage: 1}},
+      ]}},
       options: {{
         plugins: {{legend: {{display: false}}, tooltip: {{callbacks: {{
           title: items => 'Starting ' + (f.hour_labels[Math.max(0, Math.round(items[0].parsed.x - 3))] || ''),
-          label: i => `${{i.parsed.y}} in of snow in 6 hours`}}}}}},
+          label: i => `${{i.parsed.y}} in of ${{i.dataset.label}} in 6 hours`}}}}}},
         interaction: {{mode: 'nearest', axis: 'x', intersect: false}},
-        scales: {{x: {{...xAxis}}, y: {{...yWidth, min: 0, suggestedMax: {config.FORECAST_SNOW_SCALE_IN}}}}}
+        scales: {{x: {{...xAxis, stacked: true}}, y: {{...yWidth, stacked: true, min: 0, suggestedMax: {config.FORECAST_SNOW_SCALE_IN}}}}}
       }}
     }});
   }}
