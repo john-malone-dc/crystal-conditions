@@ -1,14 +1,14 @@
 {
- "fetched": "2026-11-06T09:58",
+ "fetched": "2026-11-06T10:31",
  "periods": [
   {
    "name": "Today",
-   "startTime": "2026-11-06T09:00:00-08:00",
+   "startTime": "2026-11-06T08:00:00-08:00",
    "isDaytime": true,
    "temperature": 42,
-   "windSpeed": "7 to 12 mph",
-   "shortForecast": "Partly Sunny then Light Rain",
-   "detailedForecast": "Rain after 1pm. Partly sunny. High near 42, with temperatures falling to around 40 in the afternoon. South wind 7 to 12 mph, with gusts as high as 24 mph. Chance of precipitation is 80%. New rainfall amounts between a tenth and quarter of an inch possible.",
+   "windSpeed": "7 to 14 mph",
+   "shortForecast": "Rain And Snow",
+   "detailedForecast": "Rain and snow. Partly sunny. High near 42, with temperatures falling to around 40 in the afternoon. Wind chill values as low as 25. South wind 7 to 14 mph, with gusts as high as 26 mph. Chance of precipitation is 80%. New rainfall amounts between a tenth and quarter of an inch possible.",
    "pop": 81
   },
   {
@@ -143,16 +143,6 @@
   }
  ],
  "hourly": [
-  {
-   "time": "2026-11-06T17:00:00+00:00",
-   "temperature": 35.0,
-   "snowLevel": 7125,
-   "snowfallAmount": 0.0,
-   "quantitativePrecipitation": 0.002,
-   "probabilityOfPrecipitation": 12,
-   "windSpeed": 11.5,
-   "windGust": 24.2
-  },
   {
    "time": "2026-11-06T18:00:00+00:00",
    "temperature": 36.0,
@@ -1816,6 +1806,16 @@
   {
    "time": "2026-11-13T16:00:00+00:00",
    "temperature": 33.0,
+   "snowLevel": 5017,
+   "snowfallAmount": 0.067,
+   "quantitativePrecipitation": 0.025,
+   "probabilityOfPrecipitation": 64,
+   "windSpeed": 15.0,
+   "windGust": 35.7
+  },
+  {
+   "time": "2026-11-13T17:00:00+00:00",
+   "temperature": 34.0,
    "snowLevel": 5017,
    "snowfallAmount": 0.067,
    "quantitativePrecipitation": 0.025,
