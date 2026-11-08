@@ -3,6 +3,7 @@ name: Refresh dashboard
 on:
   schedule:
     - cron: "17 13 * * *"  # UTC: 5:17 AM Pacific in winter, 6:17 AM in summer
+    - cron: "17 21 * * *"  # Backup if GitHub delays or skips the morning run: 1:17 PM Pacific in winter, 2:17 PM in summer
   workflow_dispatch:
 
 permissions:
