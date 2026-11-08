@@ -291,6 +291,11 @@ a {{ color: var(--series-1); }}
 .chart {{ position: relative; height: 260px; }}
 .chart.tall {{ height: 340px; }}
 .chart.short {{ height: 150px; }}
+@media (max-width: 600px) {{  /* phones: shorter charts so more fits on screen */
+  .chart {{ height: 200px; }}
+  .chart.tall {{ height: 240px; }}
+  .chart.short {{ height: 120px; }}
+}}
 .key {{ display: flex; flex-wrap: wrap; gap: 16px; font-size: 13px; color: var(--ink-2); margin-bottom: 6px; }}
 .key span {{ display: inline-flex; align-items: center; gap: 6px; }}
 .swatch {{ display: inline-block; width: 18px; height: 3px; border-radius: 2px; }}
