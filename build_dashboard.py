@@ -239,6 +239,9 @@ def build():
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Crystal Ski Conditions</title>
+<script>  // apply a saved Light/Dark choice before the page draws, so it doesn't flash the other theme
+try {{ const t = localStorage.getItem('theme'); if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t; }} catch (e) {{}}
+</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <style>
 :root {{
@@ -268,6 +271,10 @@ def build():
 body {{ margin: 0; background: var(--page); color: var(--ink); font: 15px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; }}
 main {{ max-width: 1100px; margin: 0 auto; padding: 24px 16px 48px; }}
 h1 {{ font-size: 26px; margin: 0 0 4px; }}
+.page-head {{ display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }}
+.theme-btn {{ font: inherit; font-size: 13px; color: var(--ink-2); background: var(--surface); border: 1px solid var(--border);
+  border-radius: 8px; padding: 4px 10px; cursor: pointer; }}
+.theme-btn:hover {{ border-color: var(--axis); }}
 h2 {{ font-size: 19px; margin: 0 0 4px; }}
 h3 {{ font-size: 15px; margin: 18px 0 6px; }}
 a {{ color: var(--series-1); }}
@@ -323,7 +330,10 @@ table.fc {{ width: 100%; border-collapse: collapse; font-size: 14px; }}
 </head>
 <body>
 <main>
-  <h1>Crystal Mountain Ski Conditions</h1>
+  <div class="page-head">
+    <h1>Crystal Mountain Ski Conditions</h1>
+    <button type="button" id="themeBtn" class="theme-btn" title="Switch between following your system, light and dark">Theme: Auto</button>
+  </div>
   <div class="muted">Built {datetime.now():%A %B %d, %Y at %I:%M %p} ·
     Sources: <a href="{config.NWAC_PAGE}">NWAC Green Valley</a>, <a href="{config.NWS_PAGE}">NWS forecast</a>,
     <a href="{config.AVY_PAGE}">NWAC avalanche</a>, NRCS SNOTEL Corral Pass</div>
@@ -389,7 +399,29 @@ document.querySelectorAll('.fc-row').forEach(r => r.addEventListener('click', ()
   r.classList.toggle('open', !detail.hidden);
 }}));
 const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+// Charts read their colors from the page when drawn, so they are redrawn whenever the theme changes
+let drawCharts = () => {{}};
+const redrawCharts = () => {{
+  if (!window.Chart) return;
+  Object.values(Chart.instances).forEach(c => c.destroy());
+  drawCharts();
+}};
+const themeBtn = document.getElementById('themeBtn');
+const themeNames = {{auto: 'Auto', light: 'Light', dark: 'Dark'}};
+const currentTheme = () => document.documentElement.dataset.theme || 'auto';
+const showTheme = () => {{ themeBtn.textContent = 'Theme: ' + themeNames[currentTheme()]; }};
+themeBtn.addEventListener('click', () => {{
+  const next = {{auto: 'light', light: 'dark', dark: 'auto'}}[currentTheme()];
+  if (next === 'auto') delete document.documentElement.dataset.theme;
+  else document.documentElement.dataset.theme = next;
+  try {{ next === 'auto' ? localStorage.removeItem('theme') : localStorage.setItem('theme', next); }} catch (e) {{}}
+  showTheme();
+  redrawCharts();
+}});
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {{ if (currentTheme() === 'auto') redrawCharts(); }});
+showTheme();
 if (window.Chart) {{
+ drawCharts = () => {{
   Chart.defaults.font.family = 'system-ui, -apple-system, "Segoe UI", sans-serif';
   Chart.defaults.color = css('--muted');
   Chart.defaults.borderColor = css('--grid');
@@ -503,6 +535,8 @@ if (window.Chart) {{
       options: {{plugins: {{legend: {{labels: {{boxHeight: 2}}}}}}, scales: {{x: {{grid: {{display: false}}, ticks: ticks(7)}}, y: {{beginAtZero: true}}}}}}
     }});
   }}
+ }};
+ drawCharts();
 }} else {{
   document.querySelectorAll('canvas').forEach(c => c.replaceWith(Object.assign(document.createElement('p'),
     {{className: 'stale', textContent: 'Charts need an internet connection (Chart.js could not load).'}})));
