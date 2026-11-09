@@ -40,5 +40,9 @@ FRESH_72H_IN = 12
 RAIN_SNOW_LEVEL_FT = 5000
 WIND_HOLD_GUST_MPH = 40
 
+# Forecast day cards on phones: daily snow totals (inches) that split light / snow / heavy
+SNOW_LIGHT_UNDER_IN = 2
+SNOW_HEAVY_FROM_IN = 6
+
 # Forecast snowfall chart: top of the scale (inches per 6 hours). Grows automatically for bigger storms.
 FORECAST_SNOW_SCALE_IN = 2

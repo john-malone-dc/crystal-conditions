@@ -88,7 +88,7 @@ def forecast_table(fc):
         days.setdefault(day, {})["day" if p["isDaytime"] else "night"] = p
 
     today = (pd.Timestamp.now(tz) - pd.Timedelta(hours=6)).date()
-    rows = ""
+    rows = cards = ""
     for i, (day, pair) in enumerate(sorted(days.items())):
         hrs = h[h["day"] == day]
         wet = hrs[hrs["quantitativePrecipitation"] > 0]
@@ -123,13 +123,65 @@ def forecast_table(fc):
                  f'<td class="num">{snow_cell}</td><td class="num">{rain_cell}</td><td class="num">{level_cell}</td>'
                  f'<td class="num">{gust_cell}</td></tr>'
                  f'<tr class="fc-detail" id="fc-detail-{i}" hidden><td colspan="8">{detail}</td></tr>')
-    return f"""<div class="table-wrap"><table class="fc">
+
+        kind, label = precip_kind(snow, rain, len(wet))
+        chips = ""
+        if rain >= 0.005:
+            chips += f'<span class="chip warn">+{rain:.2f}" rain</span>'
+        if len(wet) and lvl > config.RAIN_SNOW_LEVEL_FT:
+            chips += f'<span class="chip warn">Snow level {lvl:,} ft</span>'
+        if not pd.isna(gust) and gust >= config.WIND_HOLD_GUST_MPH:
+            chips += f'<span class="chip bad">Gusts {gust:.0f} mph</span>'
+        amount = (f'<span class="dc-big">{snow:.1f}"</span><span class="dc-unit">snow</span>' if snow >= 0.05
+                  else '<span class="dc-big dc-none">–</span>')
+        cards += (f'<details class="dc"><summary>'
+                  f'<span class="dc-icon {kind}" title="{label}">{ICONS[kind]}</span>'
+                  f'<span class="dc-main"><span class="dc-day">{name}</span>'
+                  f'<span class="dc-sub">{label} · {temps} · {max(pops) if pops else 0}%</span></span>'
+                  f'<span class="dc-amt">{amount}</span>'
+                  + (f'<span class="dc-chips">{chips}</span>' if chips else "") +
+                  f'</summary><div class="dc-detail">{detail}</div></details>')
+    return f"""<div class="day-cards">{cards}
+      <div class="muted">Tap a day for the NWS wording. Icon shows the type of precipitation from the NWS hourly grid:
+        light snow under {config.SNOW_LIGHT_UNDER_IN}", heavy {config.SNOW_HEAVY_FROM_IN}" or more; mixed or rain when
+        precipitation falls with the snow level above {config.RAIN_SNOW_LEVEL_FT:,} ft.</div></div>
+      <div class="fc-desktop"><div class="table-wrap"><table class="fc">
       <thead><tr><th>Day</th><th class="num">High / Low</th><th>Sky</th><th class="num">Precip chance</th>
         <th class="num">Snow</th><th class="num">Rain</th><th class="num">Snow level</th><th class="num">Max gust</th></tr></thead>
       <tbody>{rows}</tbody></table></div>
       <div class="muted">Click a day for the NWS wording. Snow, rain, snow level and gusts come from the NWS hourly grid;
         rain is inches of water from hours when the snow level is above {config.RAIN_SNOW_LEVEL_FT:,} ft;
-        snow level shows the highest it gets while precipitation is falling.</div>"""
+        snow level shows the highest it gets while precipitation is falling.</div></div>"""
+
+
+# Small line icons for the phone day cards; they take their color from the CSS around them
+_FLAKE = ('<path d="M12 3v18M4.2 7.5l15.6 9M4.2 16.5l15.6-9M9.5 4.5 12 7l2.5-2.5M9.5 19.5 12 17l2.5 2.5"/>')
+_DROP = '<path d="M12 4c-3 4.2-5 7-5 9.5a5 5 0 0 0 10 0C17 11 15 8.2 12 4z"/>'
+_svg = lambda body: (f'<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" '
+                     f'stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{body}</svg>')
+ICONS = {
+    "dry": _svg('<circle cx="12" cy="12" r="4"/><path d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5'
+                'M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8"/>'),
+    "light": _svg(_FLAKE), "snow": _svg(_FLAKE), "heavy": _svg(_FLAKE),
+    "mixed": _svg('<g transform="translate(-3 -2) scale(.7)">' + _FLAKE + '</g>'
+                  '<g transform="translate(9 7) scale(.65)">' + _DROP + '</g>'),
+    "rain": _svg(_DROP),
+}
+
+
+def precip_kind(snow, rain, wet_hours):
+    """Sort a day into one precipitation type for the phone cards. Returns (css class, label)."""
+    if not wet_hours or (snow < 0.05 and rain < 0.005):
+        return ("dry", "Dry") if not wet_hours else ("light", "Trace")
+    if rain >= 0.005 and snow < 0.05:
+        return "rain", "Rain"
+    if rain >= 0.005:
+        return "mixed", "Rain and snow"
+    if snow >= config.SNOW_HEAVY_FROM_IN:
+        return "heavy", "Heavy snow"
+    if snow >= config.SNOW_LIGHT_UNDER_IN:
+        return "snow", "Snow"
+    return "light", "Light snow"
 
 
 def nwac_charts(nwac):
@@ -320,6 +372,35 @@ table.fc {{ width: 100%; border-collapse: collapse; font-size: 14px; }}
 .fc-detail td {{ background: var(--page); color: var(--ink-2); font-size: 13px; }}
 .fc-detail p {{ margin: 4px 0; }}
 .warn-text {{ color: var(--warning); font-weight: 600; }}
+/* Forecast: table on wide screens, one card per day on phones */
+.day-cards {{ display: none; }}
+@media (max-width: 600px) {{
+  .fc-desktop {{ display: none; }}
+  .day-cards {{ display: block; margin-top: 16px; }}
+}}
+.dc {{ border: 1px solid var(--border); border-radius: 10px; margin-bottom: 8px; background: var(--surface); }}
+.dc summary {{ list-style: none; display: grid; grid-template-columns: 44px minmax(0, 1fr) auto; gap: 4px 12px;
+  align-items: center; padding: 10px 12px; cursor: pointer; }}
+.dc summary::-webkit-details-marker {{ display: none; }}
+.dc-icon {{ width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }}
+.dc-icon.dry {{ color: var(--muted); background: var(--page); }}
+.dc-icon.light {{ color: var(--series-1); background: color-mix(in srgb, var(--series-1) 12%, transparent); }}
+.dc-icon.snow {{ color: var(--series-1); background: color-mix(in srgb, var(--series-1) 28%, transparent); }}
+.dc-icon.heavy {{ color: #fff; background: var(--series-1); }}
+.dc-icon.mixed, .dc-icon.rain {{ color: var(--series-2); background: color-mix(in srgb, var(--series-2) 16%, transparent); }}
+.dc-main {{ display: flex; flex-direction: column; min-width: 0; }}
+.dc-day {{ font-weight: 600; }}
+.dc-sub {{ color: var(--ink-2); font-size: 13px; }}
+.dc-amt {{ text-align: right; display: flex; flex-direction: column; font-variant-numeric: tabular-nums; }}
+.dc-big {{ font-size: 22px; font-weight: 600; line-height: 1.1; }}
+.dc-none {{ color: var(--muted); }}
+.dc-unit {{ color: var(--muted); font-size: 12px; }}
+.dc-chips {{ grid-column: 2 / 4; display: flex; flex-wrap: wrap; gap: 6px; }}
+.chip {{ font-size: 12px; padding: 1px 8px; border-radius: 6px; font-weight: 600; }}
+.chip.warn {{ color: var(--warning); background: color-mix(in srgb, var(--warning) 14%, transparent); }}
+.chip.bad {{ color: var(--critical); background: color-mix(in srgb, var(--critical) 14%, transparent); }}
+.dc-detail {{ padding: 0 12px 10px; color: var(--ink-2); font-size: 13px; }}
+.dc-detail p {{ margin: 4px 0; }}
 .danger {{ display: grid; gap: 6px; margin: 12px 0; }}
 .danger-row {{ display: flex; align-items: center; gap: 10px; }}
 .danger-chip {{ width: 18px; height: 18px; border-radius: 4px; }}
