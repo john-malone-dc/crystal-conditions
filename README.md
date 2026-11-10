@@ -1,6 +1,6 @@
 # Crystal Mountain Ski Conditions
 
-A personal dashboard that combines snow history, the weather forecast, and avalanche information for Crystal Mountain, WA. A scheduled GitHub Action refreshes it once a day.
+A personal dashboard that combines snow history, the weather forecast, and avalanche information for Crystal Mountain, WA. A scheduled GitHub Action refreshes it six times a day, roughly every 3 hours from 5 AM to 9 PM Pacific.
 
 **Not official.** This project isn't affiliated with Crystal Mountain, NWAC, NWS, or NRCS. Always read the [NWAC avalanche forecast](https://nwac.us/forecasts/avalanche/west-slopes-south) before traveling in avalanche terrain.
 
