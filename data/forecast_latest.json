@@ -1,15 +1,15 @@
 {
- "fetched": "2026-11-10T13:46",
+ "fetched": "2026-11-10T17:52",
  "periods": [
   {
-   "name": "This Afternoon",
-   "startTime": "2026-11-10T12:00:00-08:00",
+   "name": "Today",
+   "startTime": "2026-11-10T11:00:00-08:00",
    "isDaytime": true,
    "temperature": 43,
    "windSpeed": "6 to 10 mph",
    "shortForecast": "Light Rain",
-   "detailedForecast": "Rain. Mostly cloudy, with a high near 43. South southwest wind 6 to 10 mph, with gusts as high as 26 mph. Chance of precipitation is 80%. New rainfall amounts between a quarter and half of an inch possible.",
-   "pop": 79
+   "detailedForecast": "Rain. Mostly cloudy, with a high near 43. South southwest wind 6 to 10 mph, with gusts as high as 26 mph. Chance of precipitation is 90%. New rainfall amounts between a quarter and half of an inch possible.",
+   "pop": 93
   },
   {
    "name": "Tonight",
@@ -143,46 +143,6 @@
   }
  ],
  "hourly": [
-  {
-   "time": "2026-11-10T21:00:00+00:00",
-   "temperature": 41.0,
-   "snowLevel": 9355,
-   "snowfallAmount": 0.0,
-   "quantitativePrecipitation": 0.063,
-   "probabilityOfPrecipitation": 79,
-   "windSpeed": 5.8,
-   "windGust": 15.0
-  },
-  {
-   "time": "2026-11-10T22:00:00+00:00",
-   "temperature": 41.0,
-   "snowLevel": 9355,
-   "snowfallAmount": 0.0,
-   "quantitativePrecipitation": 0.063,
-   "probabilityOfPrecipitation": 79,
-   "windSpeed": 6.9,
-   "windGust": 18.4
-  },
-  {
-   "time": "2026-11-10T23:00:00+00:00",
-   "temperature": 41.0,
-   "snowLevel": 9355,
-   "snowfallAmount": 0.0,
-   "quantitativePrecipitation": 0.063,
-   "probabilityOfPrecipitation": 73,
-   "windSpeed": 8.1,
-   "windGust": 20.7
-  },
-  {
-   "time": "2026-11-11T00:00:00+00:00",
-   "temperature": 41.0,
-   "snowLevel": 9428,
-   "snowfallAmount": 0.0,
-   "quantitativePrecipitation": 0.018,
-   "probabilityOfPrecipitation": 61,
-   "windSpeed": 9.2,
-   "windGust": 23.0
-  },
   {
    "time": "2026-11-11T01:00:00+00:00",
    "temperature": 42.0,
@@ -1822,6 +1782,46 @@
    "probabilityOfPrecipitation": 16,
    "windSpeed": 4.6,
    "windGust": 12.7
+  },
+  {
+   "time": "2026-11-17T21:00:00+00:00",
+   "temperature": 34.0,
+   "snowLevel": 3679,
+   "snowfallAmount": 0.0,
+   "quantitativePrecipitation": 0.0,
+   "probabilityOfPrecipitation": 16,
+   "windSpeed": 3.5,
+   "windGust": 11.5
+  },
+  {
+   "time": "2026-11-17T22:00:00+00:00",
+   "temperature": 34.0,
+   "snowLevel": 3679,
+   "snowfallAmount": 0.0,
+   "quantitativePrecipitation": 0.0,
+   "probabilityOfPrecipitation": 16,
+   "windSpeed": 3.5,
+   "windGust": 11.5
+  },
+  {
+   "time": "2026-11-17T23:00:00+00:00",
+   "temperature": 32.0,
+   "snowLevel": 3679,
+   "snowfallAmount": 0.0,
+   "quantitativePrecipitation": 0.0,
+   "probabilityOfPrecipitation": 16,
+   "windSpeed": 3.5,
+   "windGust": 11.5
+  },
+  {
+   "time": "2026-11-18T00:00:00+00:00",
+   "temperature": 31.0,
+   "snowLevel": 3843,
+   "snowfallAmount": null,
+   "quantitativePrecipitation": 0.0,
+   "probabilityOfPrecipitation": 24,
+   "windSpeed": 3.5,
+   "windGust": 10.4
   }
  ]
 }
