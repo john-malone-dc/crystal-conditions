@@ -2,9 +2,10 @@ name: Refresh dashboard
 
 on:
   schedule:
-    # 6 runs, every 3 hours (UTC). Winter: 5:05, 8:05, 11:05 AM, 2:05, 5:05, 8:05 PM Pacific.
-    # Summer (daylight time) shifts an hour later: 6:05 AM to 9:05 PM. Both stay within ~5 AM-9 PM.
-    - cron: "5 13,16,19,22,1,4 * * *"
+    # Hourly at :05 (UTC). Winter: 5:05 AM to 8:05 PM Pacific; summer (daylight time) an hour later.
+    # GitHub drops or delays many scheduled runs (Nov 2026: only ~3 of 6 three-hourly slots ran,
+    # often 1-8 hours late), so we ask for more runs than we need.
+    - cron: "5 0-4,13-23 * * *"
   workflow_dispatch:
 
 permissions:
