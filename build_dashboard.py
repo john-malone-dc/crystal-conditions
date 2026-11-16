@@ -203,10 +203,19 @@ def updated(source):
     if not stamp:
         return '<span class="stale">No data yet</span>'
     t = datetime.fromisoformat(stamp)
-    text = f"Updated {t:%a %b %d, %I:%M %p}"
     if datetime.now() - t > timedelta(hours=STALE_HOURS):
-        return f'<span class="stale">⚠ Stale - {text}. The latest refresh of this source failed.</span>'
-    return f'<span class="muted">{text}</span>'
+        return (f'<span class="stale">⚠ Stale - last downloaded {t:%a %b %d, %I:%M %p}. '
+                'The latest refresh of this source failed.</span>')
+    return ""  # fresh: the data times in the page header are enough
+
+
+def data_times(d):
+    """Two times from the data itself: NWAC's latest hourly reading and when NWS issued its forecast."""
+    obs = f"{d['nwac']['latest']:%a %b %d, %I:%M %p}" if d.get("nwac") else "unavailable"
+    issued = (d.get("forecast") or {}).get("issued")
+    fc = (f"{pd.Timestamp(issued).tz_convert('America/Los_Angeles'):%a %b %d, %I:%M %p}"
+          if issued else "unavailable")
+    return f"Latest reading (temperature, snow): {obs}<br>NWS forecast issued: {fc}"
 
 
 def error_box(d, key):
@@ -415,8 +424,8 @@ table.fc {{ width: 100%; border-collapse: collapse; font-size: 14px; }}
     <h1>Crystal Mountain Ski Conditions</h1>
     <button type="button" id="themeBtn" class="theme-btn" title="Switch between following your system, light and dark">Theme: Auto</button>
   </div>
-  <div class="muted">Built {datetime.now():%A %B %d, %Y at %I:%M %p} ·
-    Sources: <a href="{config.NWAC_PAGE}">NWAC Green Valley</a>, <a href="{config.NWS_PAGE}">NWS forecast</a>,
+  <div class="muted">{data_times(d)}</div>
+  <div class="muted">Sources: <a href="{config.NWAC_PAGE}">NWAC Green Valley</a>, <a href="{config.NWS_PAGE}">NWS forecast</a>,
     <a href="{config.AVY_PAGE}">NWAC avalanche</a>, NRCS SNOTEL Corral Pass</div>
 
   <section class="card">

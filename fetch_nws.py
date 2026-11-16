@@ -56,7 +56,8 @@ def to_imperial(field, val):
 
 def main():
     config.DATA.mkdir(exist_ok=True)
-    periods = get(config.NWS_GRID + "/forecast")["periods"]
+    forecast = get(config.NWS_GRID + "/forecast")
+    periods = forecast["periods"]
     grid = get(config.NWS_GRID)
 
     expanded = {f: expand_hourly(grid[f]["values"], f in ("snowfallAmount", "quantitativePrecipitation"))
@@ -69,6 +70,7 @@ def main():
 
     out = {
         "fetched": datetime.now().isoformat(timespec="minutes"),
+        "issued": forecast.get("updateTime"),  # when NWS last updated this forecast (UTC)
         "periods": [{**{k: p[k] for k in ("name", "startTime", "isDaytime", "temperature", "windSpeed",
                                           "shortForecast", "detailedForecast")},
                      "pop": (p.get("probabilityOfPrecipitation") or {}).get("value")}
