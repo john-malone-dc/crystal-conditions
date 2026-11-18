@@ -26,7 +26,12 @@ jobs:
     env:
       TZ: America/Los_Angeles
     steps:
+      # Start from the newest main, not the commit from when the run was triggered. Runs queue behind
+      # each other (cron-job.org plus GitHub's late backup runs), and an older starting point makes
+      # the final push fail because an earlier run already saved newer data.
       - uses: actions/checkout@v4
+        with:
+          ref: main
 
       - uses: actions/setup-python@v5
         with:
