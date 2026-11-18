@@ -5,7 +5,7 @@ A personal dashboard that combines snow history, the weather forecast, and avala
 ## How refreshes are triggered
 
 - **Main trigger: [cron-job.org](https://cron-job.org).** A job there calls GitHub's API to start the `Refresh dashboard` workflow at the six times above (Pacific time zone, so daylight saving is handled). It uses a fine-grained GitHub token limited to this repository with only "Actions: read and write" permission. **The token expires; renew it in GitHub settings and paste the new one into the cron-job.org job before then.**
-- **Backup: GitHub's own schedule** (`.github/workflows/refresh.yml`), hourly. GitHub runs only about 3 of these a day and often hours late, which is why the outside trigger exists.
+- **No backup schedule.** GitHub's own schedule was removed in Nov 2026: it ran only about 3 times a day, often hours late. If cron-job.org stops (outage, expired token), the page stops updating; a refresh can still be started by hand from the repo's Actions tab ("Refresh dashboard" → "Run workflow").
 
 **Not official.** This project isn't affiliated with Crystal Mountain, NWAC, NWS, or NRCS. Always read the [NWAC avalanche forecast](https://nwac.us/forecasts/avalanche/west-slopes-south) before traveling in avalanche terrain.
 
