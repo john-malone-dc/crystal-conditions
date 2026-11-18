@@ -1,19 +1,9 @@
 {
- "fetched": "2026-11-18T05:00",
+ "fetched": "2026-11-18T08:00",
  "issued": "2026-11-18T11:10:38+00:00",
  "periods": [
   {
-   "name": "Overnight",
-   "startTime": "2026-11-18T05:00:00-08:00",
-   "isDaytime": false,
-   "temperature": 24,
-   "windSpeed": "24 mph",
-   "shortForecast": "Cloudy",
-   "detailedForecast": "Cloudy, with a low around 24. Wind chill values as low as 10. East southeast wind around 24 mph, with gusts as high as 46 mph.",
-   "pop": 3
-  },
-  {
-   "name": "Wednesday",
+   "name": "Today",
    "startTime": "2026-11-18T06:00:00-08:00",
    "isDaytime": true,
    "temperature": 28,
@@ -23,7 +13,7 @@
    "pop": 75
   },
   {
-   "name": "Wednesday Night",
+   "name": "Tonight",
    "startTime": "2026-11-18T18:00:00-08:00",
    "isDaytime": false,
    "temperature": 25,
@@ -39,7 +29,7 @@
    "temperature": 31,
    "windSpeed": "2 to 6 mph",
    "shortForecast": "Slight Chance Snow Showers then Partly Sunny",
-   "detailedForecast": "A slight chance of snow showers before 8am. Partly sunny, with a high near 31. Wind chill values as low as 19. East wind 2 to 6 mph. Chance of precipitation is 20%.",
+   "detailedForecast": "A slight chance of snow showers before 8am. Partly sunny. High near 31, with temperatures falling to around 28 in the afternoon. Wind chill values as low as 19. East wind 2 to 6 mph. Chance of precipitation is 20%.",
    "pop": 20
   },
   {
@@ -49,7 +39,7 @@
    "temperature": 21,
    "windSpeed": "2 to 7 mph",
    "shortForecast": "Partly Cloudy",
-   "detailedForecast": "Partly cloudy, with a low around 21. West wind 2 to 7 mph.",
+   "detailedForecast": "Partly cloudy, with a low around 21. Wind chill values as low as 14. West wind 2 to 7 mph.",
    "pop": 2
   },
   {
@@ -59,7 +49,7 @@
    "temperature": 31,
    "windSpeed": "7 mph",
    "shortForecast": "Mostly Sunny",
-   "detailedForecast": "Mostly sunny, with a high near 31.",
+   "detailedForecast": "Mostly sunny, with a high near 31. West wind around 7 mph.",
    "pop": 0
   },
   {
@@ -141,39 +131,19 @@
    "shortForecast": "Light Snow Likely",
    "detailedForecast": "Snow likely. Mostly cloudy, with a high near 31. New snow accumulation of 2 to 4 inches possible.",
    "pop": 61
+  },
+  {
+   "name": "Tuesday Night",
+   "startTime": "2026-11-24T18:00:00-08:00",
+   "isDaytime": false,
+   "temperature": 28,
+   "windSpeed": "7 to 16 mph",
+   "shortForecast": "Light Snow Likely",
+   "detailedForecast": "Snow likely. Mostly cloudy, with a low around 28. New snow accumulation of 1 to 2 inches possible.",
+   "pop": 65
   }
  ],
  "hourly": [
-  {
-   "time": "2026-11-18T13:00:00+00:00",
-   "temperature": 25.0,
-   "snowLevel": 2526,
-   "snowfallAmount": 0.0,
-   "quantitativePrecipitation": 0.0,
-   "probabilityOfPrecipitation": 3,
-   "windSpeed": 24.2,
-   "windGust": 46.0
-  },
-  {
-   "time": "2026-11-18T14:00:00+00:00",
-   "temperature": 26.0,
-   "snowLevel": 2526,
-   "snowfallAmount": 0.0,
-   "quantitativePrecipitation": 0.0,
-   "probabilityOfPrecipitation": 5,
-   "windSpeed": 24.2,
-   "windGust": 46.0
-  },
-  {
-   "time": "2026-11-18T15:00:00+00:00",
-   "temperature": 27.0,
-   "snowLevel": 2730,
-   "snowfallAmount": 0.0,
-   "quantitativePrecipitation": 0.0,
-   "probabilityOfPrecipitation": 12,
-   "windSpeed": 23.0,
-   "windGust": 46.0
-  },
   {
    "time": "2026-11-18T16:00:00+00:00",
    "temperature": 27.0,
@@ -1823,6 +1793,36 @@
    "probabilityOfPrecipitation": 55,
    "windSpeed": 13.8,
    "windGust": 29.9
+  },
+  {
+   "time": "2026-11-25T13:00:00+00:00",
+   "temperature": 30.0,
+   "snowLevel": 3518,
+   "snowfallAmount": 0.017,
+   "quantitativePrecipitation": 0.002,
+   "probabilityOfPrecipitation": 55,
+   "windSpeed": 13.8,
+   "windGust": 29.9
+  },
+  {
+   "time": "2026-11-25T14:00:00+00:00",
+   "temperature": 30.0,
+   "snowLevel": 3518,
+   "snowfallAmount": 0.017,
+   "quantitativePrecipitation": 0.002,
+   "probabilityOfPrecipitation": 55,
+   "windSpeed": 13.8,
+   "windGust": 29.9
+  },
+  {
+   "time": "2026-11-25T15:00:00+00:00",
+   "temperature": 30.0,
+   "snowLevel": 3471,
+   "snowfallAmount": 0.017,
+   "quantitativePrecipitation": 0.002,
+   "probabilityOfPrecipitation": 55,
+   "windSpeed": 11.5,
+   "windGust": 25.3
   }
  ]
 }
