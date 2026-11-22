@@ -1,10 +1,10 @@
 {
- "fetched": "2026-11-21T14:00",
+ "fetched": "2026-11-21T17:00",
  "issued": "2026-11-21T20:31:01+00:00",
  "periods": [
   {
    "name": "This Afternoon",
-   "startTime": "2026-11-21T13:00:00-08:00",
+   "startTime": "2026-11-21T14:00:00-08:00",
    "isDaytime": true,
    "temperature": 30,
    "windSpeed": "9 mph",
@@ -144,36 +144,6 @@
   }
  ],
  "hourly": [
-  {
-   "time": "2026-11-21T22:00:00+00:00",
-   "temperature": 30.0,
-   "snowLevel": 3018,
-   "snowfallAmount": 0.0,
-   "quantitativePrecipitation": 0.0,
-   "probabilityOfPrecipitation": 2,
-   "windSpeed": 8.1,
-   "windGust": 16.1
-  },
-  {
-   "time": "2026-11-21T23:00:00+00:00",
-   "temperature": 28.0,
-   "snowLevel": 3018,
-   "snowfallAmount": 0.0,
-   "quantitativePrecipitation": 0.0,
-   "probabilityOfPrecipitation": 6,
-   "windSpeed": 8.1,
-   "windGust": 17.3
-  },
-  {
-   "time": "2026-11-22T00:00:00+00:00",
-   "temperature": 27.0,
-   "snowLevel": 2887,
-   "snowfallAmount": 0.05,
-   "quantitativePrecipitation": 0.003,
-   "probabilityOfPrecipitation": 49,
-   "windSpeed": 8.1,
-   "windGust": 16.1
-  },
   {
    "time": "2026-11-22T01:00:00+00:00",
    "temperature": 26.0,
@@ -1823,6 +1793,36 @@
    "probabilityOfPrecipitation": 65,
    "windSpeed": 4.6,
    "windGust": 6.9
+  },
+  {
+   "time": "2026-11-28T22:00:00+00:00",
+   "temperature": 34.0,
+   "snowLevel": 5381,
+   "snowfallAmount": 0.017,
+   "quantitativePrecipitation": 0.018,
+   "probabilityOfPrecipitation": 65,
+   "windSpeed": 4.6,
+   "windGust": 6.9
+  },
+  {
+   "time": "2026-11-28T23:00:00+00:00",
+   "temperature": 33.0,
+   "snowLevel": 5381,
+   "snowfallAmount": 0.017,
+   "quantitativePrecipitation": 0.018,
+   "probabilityOfPrecipitation": 65,
+   "windSpeed": 4.6,
+   "windGust": 6.9
+  },
+  {
+   "time": "2026-11-29T00:00:00+00:00",
+   "temperature": 32.0,
+   "snowLevel": 5328,
+   "snowfallAmount": null,
+   "quantitativePrecipitation": 0.007,
+   "probabilityOfPrecipitation": 60,
+   "windSpeed": 4.6,
+   "windGust": 5.8
   }
  ]
 }
