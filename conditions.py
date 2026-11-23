@@ -1,5 +1,6 @@
 """Turn the raw data files into the numbers and plain-English flags the dashboard shows."""
 import json
+import re
 from datetime import datetime, timedelta, timezone
 
 import pandas as pd
@@ -57,9 +58,50 @@ def nwac_summary(df):
     }
 
 
+_NUM = r"(\d+(?:\.\d+)?|one|an)"
+
+
+def text_snow_max(text):
+    """Top of the snow range in an NWS text period, in inches, or None if the text gives no number.
+    '2 to 4 inches' -> 4, 'around 3 inches' / 'around an inch' -> 3 / 1.
+    'less than one inch' and 'little or no' return None: those keep the grid amount, which is already under the cap."""
+    nums = []
+    for a, b in re.findall(rf"{_NUM} to {_NUM} inch", text, re.I):
+        nums.append(b)
+    nums += re.findall(rf"around {_NUM} inch", text, re.I)
+    if not nums:
+        return None
+    return max(1.0 if n.lower() in ("one", "an") else float(n) for n in nums)
+
+
+def use_top_of_range(h, periods):
+    """Rescale the hourly grid snow so each text period totals the top of its NWS range.
+    Keeps the grid's timing; if the grid has no snow in that period, spreads it over the wet hours (or all hours)."""
+    h["snowfallGrid"] = h["snowfallAmount"]
+    for i, p in enumerate(periods):
+        top = text_snow_max(p.get("detailedForecast", ""))
+        if top is None or "startTime" not in p:
+            continue
+        start = pd.Timestamp(p["startTime"])
+        end = pd.Timestamp(periods[i + 1]["startTime"]) if i + 1 < len(periods) else start + pd.Timedelta(hours=12)
+        rows = (h["time"] >= start) & (h["time"] < end)
+        if not rows.any():
+            continue
+        grid = h.loc[rows, "snowfallAmount"].fillna(0)
+        if grid.sum() > 0:
+            weights = grid / grid.sum()
+        else:
+            wet = h.loc[rows, "quantitativePrecipitation"].fillna(0) > 0
+            weights = (wet / wet.sum()) if wet.any() else pd.Series(1 / rows.sum(), index=grid.index)
+        h.loc[rows, "snowfallAmount"] = weights * top
+    return h
+
+
 def forecast_summary(fc, hours=72):
     h = pd.DataFrame(fc["hourly"])
     h["time"] = pd.to_datetime(h["time"])
+    if config.SNOW_USE_TOP_OF_RANGE:
+        h = use_top_of_range(h, fc.get("periods", []))
     cutoff = datetime.now(timezone.utc) + timedelta(hours=hours)
     next_ = h[h["time"] <= cutoff]
     wet = next_[next_["quantitativePrecipitation"] > 0]  # NWS spreads precip thinly across 6-hr blocks

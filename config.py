@@ -44,5 +44,9 @@ WIND_HOLD_GUST_MPH = 40
 SNOW_LIGHT_UNDER_IN = 2
 SNOW_HEAVY_FROM_IN = 6
 
+# Forecast snow amounts: True uses the top of the NWS text range ("2 to 4 inches" -> 4") for each period,
+# keeping the hourly grid's timing. False uses the NWS hourly grid's best-guess amounts as-is.
+SNOW_USE_TOP_OF_RANGE = True
+
 # Forecast snowfall chart: top of the scale (inches per 6 hours). Grows automatically for bigger storms.
 FORECAST_SNOW_SCALE_IN = 2
