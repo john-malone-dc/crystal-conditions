@@ -1,15 +1,15 @@
 {
- "fetched": "2026-11-24T20:35",
+ "fetched": "2026-11-24T20:36",
  "issued": "2026-11-24T20:26:12+00:00",
  "periods": [
   {
    "name": "Tonight",
-   "startTime": "2026-11-24T20:00:00-08:00",
+   "startTime": "2026-11-24T18:00:00-08:00",
    "isDaytime": false,
    "temperature": 30,
    "windSpeed": "16 to 21 mph",
    "shortForecast": "Light Snow Likely",
-   "detailedForecast": "Snow likely before 10pm, then rain and snow likely. Mostly cloudy. Low around 30, with temperatures rising to around 34 overnight. Wind chill values as low as 21. South southwest wind 16 to 21 mph, with gusts as high as 40 mph. Chance of precipitation is 70%. Little or no snow accumulation expected.",
+   "detailedForecast": "Snow likely before 10pm, then rain and snow likely. Mostly cloudy. Low around 30, with temperatures rising to around 34 overnight. Wind chill values as low as 19. South southwest wind 16 to 21 mph, with gusts as high as 40 mph. Chance of precipitation is 70%. Little or no snow accumulation expected.",
    "pop": 68
   },
   {
