@@ -1,16 +1,16 @@
 {
- "fetched": "2026-11-26T14:00",
- "issued": "2026-11-26T18:27:11+00:00",
+ "fetched": "2026-11-26T17:00",
+ "issued": "2026-11-26T23:05:41+00:00",
  "periods": [
   {
    "name": "Thanksgiving Day",
-   "startTime": "2026-11-26T11:00:00-08:00",
+   "startTime": "2026-11-26T17:00:00-08:00",
    "isDaytime": true,
    "temperature": 36,
    "windSpeed": "9 mph",
-   "shortForecast": "Rain And Snow",
-   "detailedForecast": "Rain and snow before noon, then rain and snow. Mostly cloudy. High near 36, with temperatures falling to around 33 in the afternoon. Wind chill values as low as 25. Southwest wind around 9 mph, with gusts as high as 22 mph. Chance of precipitation is 80%. New rainfall amounts between a tenth and quarter of an inch possible.",
-   "pop": 80
+   "shortForecast": "Rain And Snow Likely",
+   "detailedForecast": "Rain and snow likely. Mostly cloudy. High near 36, with temperatures falling to around 33 in the afternoon. Wind chill values as low as 25. Southwest wind around 9 mph, with gusts as high as 22 mph. Chance of precipitation is 70%. New rainfall amounts less than a tenth of an inch possible.",
+   "pop": 73
   },
   {
    "name": "Tonight",
@@ -144,36 +144,6 @@
   }
  ],
  "hourly": [
-  {
-   "time": "2026-11-26T22:00:00+00:00",
-   "temperature": 34.0,
-   "snowLevel": 5643,
-   "snowfallAmount": 0.0,
-   "quantitativePrecipitation": 0.027,
-   "probabilityOfPrecipitation": 76,
-   "windSpeed": 8.1,
-   "windGust": 18.4
-  },
-  {
-   "time": "2026-11-26T23:00:00+00:00",
-   "temperature": 34.0,
-   "snowLevel": 5643,
-   "snowfallAmount": 0.0,
-   "quantitativePrecipitation": 0.027,
-   "probabilityOfPrecipitation": 65,
-   "windSpeed": 8.1,
-   "windGust": 19.6
-  },
-  {
-   "time": "2026-11-27T00:00:00+00:00",
-   "temperature": 33.0,
-   "snowLevel": 5407,
-   "snowfallAmount": 0.0,
-   "quantitativePrecipitation": 0.002,
-   "probabilityOfPrecipitation": 77,
-   "windSpeed": 8.1,
-   "windGust": 19.6
-  },
   {
    "time": "2026-11-27T01:00:00+00:00",
    "temperature": 33.0,
@@ -1009,7 +979,7 @@
    "temperature": 31.0,
    "snowLevel": 4856,
    "snowfallAmount": 0.183,
-   "quantitativePrecipitation": 0.023,
+   "quantitativePrecipitation": 0.025,
    "probabilityOfPrecipitation": 91,
    "windSpeed": 13.8,
    "windGust": 31.1
@@ -1019,7 +989,7 @@
    "temperature": 31.0,
    "snowLevel": 4856,
    "snowfallAmount": 0.183,
-   "quantitativePrecipitation": 0.023,
+   "quantitativePrecipitation": 0.025,
    "probabilityOfPrecipitation": 91,
    "windSpeed": 13.8,
    "windGust": 31.1
@@ -1029,7 +999,7 @@
    "temperature": 31.0,
    "snowLevel": 4856,
    "snowfallAmount": 0.183,
-   "quantitativePrecipitation": 0.023,
+   "quantitativePrecipitation": 0.025,
    "probabilityOfPrecipitation": 91,
    "windSpeed": 13.8,
    "windGust": 31.1
@@ -1039,7 +1009,7 @@
    "temperature": 31.0,
    "snowLevel": 4725,
    "snowfallAmount": 0.183,
-   "quantitativePrecipitation": 0.023,
+   "quantitativePrecipitation": 0.025,
    "probabilityOfPrecipitation": 91,
    "windSpeed": 13.8,
    "windGust": 31.1
@@ -1049,7 +1019,7 @@
    "temperature": 31.0,
    "snowLevel": 4725,
    "snowfallAmount": 0.183,
-   "quantitativePrecipitation": 0.023,
+   "quantitativePrecipitation": 0.025,
    "probabilityOfPrecipitation": 91,
    "windSpeed": 13.8,
    "windGust": 31.1
@@ -1059,7 +1029,7 @@
    "temperature": 30.0,
    "snowLevel": 4725,
    "snowfallAmount": 0.183,
-   "quantitativePrecipitation": 0.023,
+   "quantitativePrecipitation": 0.025,
    "probabilityOfPrecipitation": 91,
    "windSpeed": 13.8,
    "windGust": 31.1
@@ -1823,6 +1793,36 @@
    "probabilityOfPrecipitation": 52,
    "windSpeed": 3.5,
    "windGust": 10.4
+  },
+  {
+   "time": "2026-12-03T22:00:00+00:00",
+   "temperature": 29.0,
+   "snowLevel": 3806,
+   "snowfallAmount": 0.067,
+   "quantitativePrecipitation": 0.007,
+   "probabilityOfPrecipitation": 52,
+   "windSpeed": 3.5,
+   "windGust": 10.4
+  },
+  {
+   "time": "2026-12-03T23:00:00+00:00",
+   "temperature": 28.0,
+   "snowLevel": 3806,
+   "snowfallAmount": 0.067,
+   "quantitativePrecipitation": 0.007,
+   "probabilityOfPrecipitation": 52,
+   "windSpeed": 3.5,
+   "windGust": 10.4
+  },
+  {
+   "time": "2026-12-04T00:00:00+00:00",
+   "temperature": 28.0,
+   "snowLevel": 3832,
+   "snowfallAmount": null,
+   "quantitativePrecipitation": 0.003,
+   "probabilityOfPrecipitation": 41,
+   "windSpeed": 3.5,
+   "windGust": 9.2
   }
  ]
 }
