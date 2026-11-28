@@ -1,19 +1,9 @@
 {
- "fetched": "2026-11-28T05:00",
+ "fetched": "2026-11-28T08:00",
  "issued": "2026-11-28T06:26:12+00:00",
  "periods": [
   {
-   "name": "Overnight",
-   "startTime": "2026-11-28T05:00:00-08:00",
-   "isDaytime": false,
-   "temperature": 22,
-   "windSpeed": "7 mph",
-   "shortForecast": "Mostly Clear",
-   "detailedForecast": "Mostly clear, with a low around 22. Wind chill values as low as 15. East southeast wind around 7 mph.",
-   "pop": 0
-  },
-  {
-   "name": "Saturday",
+   "name": "Today",
    "startTime": "2026-11-28T06:00:00-08:00",
    "isDaytime": true,
    "temperature": 35,
@@ -23,7 +13,7 @@
    "pop": 1
   },
   {
-   "name": "Saturday Night",
+   "name": "Tonight",
    "startTime": "2026-11-28T18:00:00-08:00",
    "isDaytime": false,
    "temperature": 27,
@@ -49,7 +39,7 @@
    "temperature": 30,
    "windSpeed": "8 to 17 mph",
    "shortForecast": "Light Snow",
-   "detailedForecast": "Snow before 7pm, then rain and snow. Cloudy, with a low around 30. South southeast wind 8 to 17 mph, with gusts as high as 37 mph. Chance of precipitation is 100%. New snow accumulation of 3 to 5 inches possible.",
+   "detailedForecast": "Snow before 7pm, then rain and snow. Cloudy, with a low around 30. Wind chill values as low as 21. South southeast wind 8 to 17 mph, with gusts as high as 37 mph. Chance of precipitation is 100%. New snow accumulation of 3 to 5 inches possible.",
    "pop": 99
   },
   {
@@ -59,7 +49,7 @@
    "temperature": 33,
    "windSpeed": "8 to 18 mph",
    "shortForecast": "Light Snow",
-   "detailedForecast": "Snow. Cloudy, with a high near 33. Chance of precipitation is 100%. New snow accumulation of 3 to 7 inches possible.",
+   "detailedForecast": "Snow. Cloudy, with a high near 33. South wind 8 to 18 mph, with gusts as high as 40 mph. Chance of precipitation is 100%. New snow accumulation of 3 to 7 inches possible.",
    "pop": 99
   },
   {
@@ -69,7 +59,7 @@
    "temperature": 27,
    "windSpeed": "8 to 12 mph",
    "shortForecast": "Light Snow Likely",
-   "detailedForecast": "Snow likely before 4am. Mostly cloudy, with a low around 27. New snow accumulation of 1 to 2 inches possible.",
+   "detailedForecast": "Snow likely before 4am. Mostly cloudy, with a low around 27. Chance of precipitation is 60%. New snow accumulation of 1 to 2 inches possible.",
    "pop": 63
   },
   {
@@ -141,39 +131,19 @@
    "shortForecast": "Chance Light Snow",
    "detailedForecast": "A chance of snow before 5pm. Partly sunny, with a high near 31. Little or no snow accumulation expected.",
    "pop": 25
+  },
+  {
+   "name": "Friday Night",
+   "startTime": "2026-12-04T18:00:00-08:00",
+   "isDaytime": false,
+   "temperature": 23,
+   "windSpeed": "3 mph",
+   "shortForecast": "Mostly Cloudy",
+   "detailedForecast": "Mostly cloudy, with a low around 23.",
+   "pop": 25
   }
  ],
  "hourly": [
-  {
-   "time": "2026-11-28T13:00:00+00:00",
-   "temperature": 23.0,
-   "snowLevel": 2919,
-   "snowfallAmount": 0.0,
-   "quantitativePrecipitation": 0.0,
-   "probabilityOfPrecipitation": 0,
-   "windSpeed": 6.9,
-   "windGust": 12.7
-  },
-  {
-   "time": "2026-11-28T14:00:00+00:00",
-   "temperature": 22.0,
-   "snowLevel": 2919,
-   "snowfallAmount": 0.0,
-   "quantitativePrecipitation": 0.0,
-   "probabilityOfPrecipitation": 0,
-   "windSpeed": 8.1,
-   "windGust": 13.8
-  },
-  {
-   "time": "2026-11-28T15:00:00+00:00",
-   "temperature": 22.0,
-   "snowLevel": 2525,
-   "snowfallAmount": 0.0,
-   "quantitativePrecipitation": 0.0,
-   "probabilityOfPrecipitation": 0,
-   "windSpeed": 8.1,
-   "windGust": 16.1
-  },
   {
    "time": "2026-11-28T16:00:00+00:00",
    "temperature": 23.0,
@@ -1816,6 +1786,36 @@
   },
   {
    "time": "2026-12-05T12:00:00+00:00",
+   "temperature": null,
+   "snowLevel": null,
+   "snowfallAmount": null,
+   "quantitativePrecipitation": null,
+   "probabilityOfPrecipitation": null,
+   "windSpeed": null,
+   "windGust": null
+  },
+  {
+   "time": "2026-12-05T13:00:00+00:00",
+   "temperature": null,
+   "snowLevel": null,
+   "snowfallAmount": null,
+   "quantitativePrecipitation": null,
+   "probabilityOfPrecipitation": null,
+   "windSpeed": null,
+   "windGust": null
+  },
+  {
+   "time": "2026-12-05T14:00:00+00:00",
+   "temperature": null,
+   "snowLevel": null,
+   "snowfallAmount": null,
+   "quantitativePrecipitation": null,
+   "probabilityOfPrecipitation": null,
+   "windSpeed": null,
+   "windGust": null
+  },
+  {
+   "time": "2026-12-05T15:00:00+00:00",
    "temperature": null,
    "snowLevel": null,
    "snowfallAmount": null,
